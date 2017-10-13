@@ -1,13 +1,14 @@
-import React from 'react'
-import { render } from 'react-dom'
-import { Provider } from 'react-redux'
-import { ConnectedRouter } from 'react-router-redux'
-import store, { history } from './store/store'
-import App from './components/app'
+import React from 'react';
+import {render} from 'react-dom';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import {Provider} from 'react-redux';
+import {ConnectedRouter} from 'react-router-redux';
+import store, {history} from './store/store';
+import App from './components/App';
+import registerServiceWorker from './registerServiceWorker';
+import './index.css';
 
-import './index.css'
-
-const target = document.querySelector('#root')
+injectTapEventPlugin();
 
 render(
     <Provider store={store}>
@@ -17,5 +18,7 @@ render(
             </div>
         </ConnectedRouter>
     </Provider>,
-    target
-)
+    document.querySelector('#root')
+);
+
+registerServiceWorker();
