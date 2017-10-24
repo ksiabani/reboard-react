@@ -1,5 +1,4 @@
 import React from 'react'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import { push } from 'react-router-redux'
 import { bindActionCreators } from 'redux'
@@ -12,7 +11,7 @@ import {
 } from '../../reducers/counterReducer'
 
 const Home = props => (
-    <MuiThemeProvider>
+    <div>
         <h1>Home</h1>
         <p>Count: {props.count}</p>
 
@@ -28,7 +27,7 @@ const Home = props => (
 
         <p><button onClick={() => props.changePage()}>Go to about page via redux</button></p>
         <RaisedButton label="Material UI" />
-    </MuiThemeProvider>
+    </div>
 );
 
 const mapStateToProps = state => ({
