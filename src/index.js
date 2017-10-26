@@ -10,9 +10,7 @@ import './index.css';
 render(
     <Provider store={store}>
         <ConnectedRouter history={history}>
-            <div>
                 <App/>
-            </div>
         </ConnectedRouter>
     </Provider>,
     document.querySelector('#root')

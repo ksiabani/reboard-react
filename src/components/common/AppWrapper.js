@@ -103,7 +103,7 @@ import {withStyles} from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
-import List from 'material-ui/List';
+import List, {ListItem, ListItemIcon, ListItemText} from 'material-ui/List';
 import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import Hidden from 'material-ui/Hidden';
@@ -117,7 +117,7 @@ const drawerWidth = 290;
 const styles = theme => ({
     root: {
         width: '100%',
-        height: 430,
+        height: '100%',
         // marginTop: theme.spacing.unit * 3,
         zIndex: 1,
         overflow: 'hidden',
@@ -136,27 +136,26 @@ const styles = theme => ({
             width: `calc(100% - ${drawerWidth}px)`,
         },
     },
-    drawerAppBar: {
-        position: 'static',
-        boxShadow: 'unset'
-    },
     navIconHide: {
         [theme.breakpoints.up('md')]: {
             display: 'none',
         },
     },
-    drawerHeader: theme.mixins.toolbar,
+    // drawerHeader: theme.mixins.toolbar,
     drawerPaper: {
         width: 290,
+        height: '100%',
+        backgroundColor: '#fafafa',
         [theme.breakpoints.up('md')]: {
             width: drawerWidth,
             position: 'relative',
-            height: '100%',
+            height: '100vh',
             borderRight: 0
         },
     },
     content: {
-        backgroundColor: theme.palette.background.default,
+        // backgroundColor: theme.palette.background.default,
+        backgroundColor: '#f5f5f5',
         width: '100%',
         padding: theme.spacing.unit * 3,
         height: 'calc(100% - 56px)',
@@ -166,6 +165,20 @@ const styles = theme => ({
             marginTop: 64,
         },
     },
+    drawerAppBar: {
+        position: 'static',
+        boxShadow: 'unset'
+    },
+    appToolbar: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        [theme.breakpoints.up('sm')]: {
+            justifyContent: 'flex-end',
+        }
+    },
+    pageTitle: {
+        flex: 1
+    }
 });
 
 class ResponsiveDrawer extends React.Component {
@@ -182,11 +195,36 @@ class ResponsiveDrawer extends React.Component {
 
         const drawer = (
             <div>
-                <div className={classes.drawerHeader}/>
+                {/*<div className={classes.drawerHeader}/>*/}
+                <List>
+                    <ListItem button>
+                        <ListItemIcon>
+                            <Icon>home</Icon>
+                        </ListItemIcon>
+                        <ListItemText primary="Home"/>
+                    </ListItem>
+                    <ListItem button>
+                        <ListItemIcon>
+                            <Icon>bug_report</Icon>
+                        </ListItemIcon>
+                        <ListItemText primary="Issues"/>
+                    </ListItem>
+                </List>
                 <Divider />
-                <List></List>
-                <Divider />
-                <List></List>
+                <List>
+                    <ListItem button>
+                        <ListItemIcon>
+                            <Icon>settings</Icon>
+                        </ListItemIcon>
+                        <ListItemText primary="Settings"/>
+                    </ListItem>
+                    <ListItem button>
+                        <ListItemIcon>
+                            <Icon>code</Icon>
+                        </ListItemIcon>
+                        <ListItemText primary="Open in GitHub"/>
+                    </ListItem>
+                </List>
             </div>
         );
 
@@ -194,7 +232,7 @@ class ResponsiveDrawer extends React.Component {
             <div className={classes.root}>
                 <div className={classes.appFrame}>
                     <AppBar className={classes.appBar}>
-                        <Toolbar>
+                        <Toolbar className={classes.appToolbar}>
                             <IconButton
                                 color="contrast"
                                 aria-label="open drawer"
@@ -204,10 +242,16 @@ class ResponsiveDrawer extends React.Component {
                                 <MenuIcon />
                             </IconButton>
                             <Hidden mdUp>
-                                <Typography type="title" color="inherit" noWrap>
+                                <Typography type="title" color="inherit" noWrap className={classes.pageTitle}>
                                     Home
                                 </Typography>
                             </Hidden>
+                            <IconButton
+                                color="contrast"
+                                aria-label="settings"
+                            >
+                                <Icon>settings</Icon>
+                            </IconButton>
                         </Toolbar>
                     </AppBar>
                     <Hidden mdUp>
@@ -215,9 +259,7 @@ class ResponsiveDrawer extends React.Component {
                             type="temporary"
                             anchor={theme.direction === 'rtl' ? 'right' : 'left'}
                             open={this.state.mobileOpen}
-                            classes={{
-                                paper: classes.drawerPaper,
-                            }}
+                            classes={{paper: classes.drawerPaper}}
                             onRequestClose={this.handleDrawerToggle}
                             ModalProps={{
                                 keepMounted: true, // Better open performance on mobile.
