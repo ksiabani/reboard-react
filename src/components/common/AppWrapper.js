@@ -99,7 +99,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import {withStyles} from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
@@ -112,7 +112,7 @@ import MenuIcon from 'material-ui-icons/Menu';
 import Icon from 'material-ui/Icon';
 // import { mailFolderListItems, otherMailFolderListItems } from './tileData';
 
-const drawerWidth = 240;
+const drawerWidth = 290;
 
 const styles = theme => ({
     root: {
@@ -131,9 +131,14 @@ const styles = theme => ({
     appBar: {
         position: 'absolute',
         marginLeft: drawerWidth,
+        boxShadow: 'unset',
         [theme.breakpoints.up('md')]: {
             width: `calc(100% - ${drawerWidth}px)`,
         },
+    },
+    drawerAppBar: {
+        position: 'static',
+        boxShadow: 'unset'
     },
     navIconHide: {
         [theme.breakpoints.up('md')]: {
@@ -142,11 +147,12 @@ const styles = theme => ({
     },
     drawerHeader: theme.mixins.toolbar,
     drawerPaper: {
-        width: 250,
+        width: 290,
         [theme.breakpoints.up('md')]: {
             width: drawerWidth,
             position: 'relative',
             height: '100%',
+            borderRight: 0
         },
     },
     content: {
@@ -168,15 +174,15 @@ class ResponsiveDrawer extends React.Component {
     };
 
     handleDrawerToggle = () => {
-        this.setState({ mobileOpen: !this.state.mobileOpen });
+        this.setState({mobileOpen: !this.state.mobileOpen});
     };
 
     render() {
-        const { classes, theme } = this.props;
+        const {classes, theme} = this.props;
 
         const drawer = (
             <div>
-                <div className={classes.drawerHeader} />
+                <div className={classes.drawerHeader}/>
                 <Divider />
                 <List></List>
                 <Divider />
@@ -197,9 +203,11 @@ class ResponsiveDrawer extends React.Component {
                             >
                                 <MenuIcon />
                             </IconButton>
-                            <Typography type="title" color="inherit" noWrap>
-                                Home
-                            </Typography>
+                            <Hidden mdUp>
+                                <Typography type="title" color="inherit" noWrap>
+                                    Home
+                                </Typography>
+                            </Hidden>
                         </Toolbar>
                     </AppBar>
                     <Hidden mdUp>
@@ -215,6 +223,17 @@ class ResponsiveDrawer extends React.Component {
                                 keepMounted: true, // Better open performance on mobile.
                             }}
                         >
+                            <AppBar className={classes.drawerAppBar}>
+                                <Toolbar>
+                                    <IconButton className={classes.menuButton} color="contrast" aria-label="Menu">
+                                        {/*<MenuIcon />*/}
+                                        <Icon>dashboard</Icon>
+                                    </IconButton>
+                                    <Typography type="title" color="inherit" className={classes.flex}>
+                                        Reboard
+                                    </Typography>
+                                </Toolbar>
+                            </AppBar>
                             {drawer}
                         </Drawer>
                     </Hidden>
@@ -226,7 +245,7 @@ class ResponsiveDrawer extends React.Component {
                                 paper: classes.drawerPaper,
                             }}
                         >
-                            <AppBar position="static">
+                            <AppBar className={classes.drawerAppBar}>
                                 <Toolbar>
                                     <IconButton className={classes.menuButton} color="contrast" aria-label="Menu">
                                         {/*<MenuIcon />*/}
@@ -256,4 +275,4 @@ ResponsiveDrawer.propTypes = {
     theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(ResponsiveDrawer);
+export default withStyles(styles, {withTheme: true})(ResponsiveDrawer);
