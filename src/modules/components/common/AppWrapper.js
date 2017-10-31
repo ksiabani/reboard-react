@@ -99,6 +99,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom'
 import {withStyles} from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
@@ -178,6 +179,10 @@ const styles = theme => ({
     },
     pageTitle: {
         flex: 1
+    },
+    link: {
+        color: 'black',
+        textDecoration: 'none'
     }
 });
 
@@ -197,18 +202,22 @@ class ResponsiveDrawer extends React.Component {
             <div>
                 {/*<div className={classes.drawerHeader}/>*/}
                 <List>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <Icon>home</Icon>
-                        </ListItemIcon>
-                        <ListItemText primary="Home"/>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <Icon>bug_report</Icon>
-                        </ListItemIcon>
-                        <ListItemText primary="Issues"/>
-                    </ListItem>
+                    <NavLink to="/" activeStyle={{ color:'black' }} className={classes.link}>
+                        <ListItem button>
+                            <ListItemIcon>
+                                <Icon>home</Icon>
+                            </ListItemIcon>
+                            <ListItemText primary="Home"/>
+                        </ListItem>
+                    </NavLink>
+                    <NavLink to="/issues" activeStyle={{ color:'black' }} className={classes.link}>
+                        <ListItem button>
+                            <ListItemIcon>
+                                <Icon>bug_report</Icon>
+                            </ListItemIcon>
+                            <ListItemText primary="Issues"/>
+                        </ListItem>
+                    </NavLink>
                 </List>
                 <Divider />
                 <List>
@@ -302,9 +311,7 @@ class ResponsiveDrawer extends React.Component {
                         </Drawer>
                     </Hidden>
                     <main className={classes.content}>
-                        <Typography type="body1" noWrap>
-                            {'You think water moves fast? You should see ice.'}
-                        </Typography>
+                        {this.props.children}
                     </main>
                 </div>
             </div>
