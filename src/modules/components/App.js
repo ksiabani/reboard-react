@@ -11,7 +11,12 @@ import Issues from '../../pages/issues/Issues';
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
-const theme = createMuiTheme();
+const theme = createMuiTheme({
+    typography: {
+        fontFamily: '"Open Sans", sans-serif'
+        // font-family: 'Open Sans', sans-serif !important;
+    }
+});
 
 const App = () => {
     return (
