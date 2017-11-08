@@ -8,6 +8,7 @@ import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import Icon from 'material-ui/Icon';
 import {LineChart, Text, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer} from 'recharts';
+import List, {ListItem, ListItemText} from 'material-ui/List';
 
 const styles = theme => ({
     bullet: {
@@ -26,12 +27,14 @@ const styles = theme => ({
         color: 'white',
         fontWeight: '400'
     },
+    cardHeader: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        paddingRight: 8
+    },
     cardActions: {
         display: 'flex',
         justifyContent: 'flex-end'
-    },
-    cardHeader: {
-        fontSize: 14
     },
     headline: {
         color: 'white',
@@ -42,11 +45,14 @@ const styles = theme => ({
         padding: 8,
         height: 340
     },
-    chartHeader: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        paddingRight: 8
+    stats: {
+        padding: 8,
+        height: 340
     },
+    statsContent: {
+        paddingTop: 0,
+        paddingBottom: 0
+    }
 });
 
 const stats = [
@@ -164,9 +170,10 @@ const Home = props => {
                     </Card>
                 </Grid>
             )}
-            <Grid item xs={12} sm={7}>
+
+            <Grid item xs={12} sm={8}>
                 <Card className={classes.chart}>
-                    <Toolbar className={classes.chartHeader}>
+                    <Toolbar className={classes.cardHeader}>
                         <Typography type="title" color="inherit">
                             Contributions (last year)
                         </Typography>
@@ -177,23 +184,61 @@ const Home = props => {
                     <CardContent>
                         <ResponsiveContainer width="99%" height={260}>
                             <LineChart data={data}>
-                                <XAxis
-                                    dataKey="name"
-                                    label="Week"
-                                    interval={10}
-                                    tick={{fontFamily: "\"Open Sans\", sans-serif", fontSize: "0.9rem"}}
-                                    height={50}
+                                <XAxis dataKey="name"
+                                       label="Week"
+                                       interval={10}
+                                       tick={{fontFamily: "\"Open Sans\", sans-serif", fontSize: "0.9rem"}}
+                                       height={50}
                                 />
                                 <YAxis label={<CustomizedLabel/>} width={50}/>
                                 <CartesianGrid/>
                                 <Tooltip/>
-                                <Line type="linear" dataKey="value" strokeWidth="2" stroke="#FE7675" dot={false}
-                                      activeDot={{r: 5}}/>
+                                <Line type="linear"
+                                      dataKey="value"
+                                      strokeWidth="2"
+                                      stroke="#FE7675"
+                                      dot={false}
+                                      activeDot={{r: 5}}
+                                />
                             </LineChart>
                         </ResponsiveContainer>
                     </CardContent>
                 </Card>
             </Grid>
+
+            <Grid item xs={12} sm={4}>
+                <Card className={classes.stats}>
+                    <Toolbar className={classes.cardHeader}>
+                        <Typography type="title" color="inherit">
+                            Stats
+                        </Typography>
+                        <IconButton color="inherit">
+                            <Icon>more_vert</Icon>
+                        </IconButton>
+                    </Toolbar>
+                    <CardContent className={classes.statsContent}>
+                        <List className={classes.statsContent}>
+                            {stats.map(stat =>
+                                <ListItem key={stat.id}>
+                                    <Icon color="accent">{stat.icon}</Icon>
+                                    <ListItemText
+                                        disableTypography
+                                        primary={
+                                            <Typography type="title">
+                                                {stat.value}
+                                            </Typography>
+                                        }
+                                        secondary={<Typography type="subheading">
+                                            {stat.text}
+                                        </Typography>}
+                                    />
+                                </ListItem>
+                            )}
+                        </List>
+                    </CardContent>
+                </Card>
+            </Grid>
+
         </Grid>
     );
 };
