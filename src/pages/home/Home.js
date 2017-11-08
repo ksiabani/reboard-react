@@ -8,6 +8,7 @@ import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import Icon from 'material-ui/Icon';
 import {LineChart, Text, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer} from 'recharts';
+import {Pie, PieChart, Cell} from 'recharts';
 import List, {ListItem, ListItemText} from 'material-ui/List';
 
 const styles = theme => ({
@@ -43,11 +44,11 @@ const styles = theme => ({
     },
     chart: {
         padding: 8,
-        height: 340
+        height: 364
     },
     stats: {
         padding: 8,
-        height: 340
+        height: 364
     },
     statsContent: {
         paddingTop: 0,
@@ -86,60 +87,89 @@ const stats = [
     }
 ];
 
-const data = [
-    {name: 1, value: 24},
-    {name: 2, value: 17},
-    {name: 3, value: 12},
-    {name: 4, value: 16},
-    {name: 5, value: 9},
-    {name: 6, value: 8},
-    {name: 7, value: 27},
-    {name: 8, value: 10},
-    {name: 9, value: 8},
-    {name: 10, value: 5},
-    {name: 11, value: 30},
-    {name: 12, value: 41},
-    {name: 13, value: 35},
-    {name: 14, value: 46},
-    {name: 15, value: 38},
-    {name: 16, value: 5},
-    {name: 17, value: 37},
-    {name: 18, value: 38},
-    {name: 19, value: 36},
-    {name: 20, value: 70},
-    {name: 21, value: 3},
-    {name: 22, value: 42},
-    {name: 23, value: 33},
-    {name: 24, value: 32},
-    {name: 25, value: 19},
-    {name: 26, value: 31},
-    {name: 27, value: 54},
-    {name: 28, value: 31},
-    {name: 29, value: 25},
-    {name: 30, value: 32},
-    {name: 31, value: 59},
-    {name: 32, value: 26},
-    {name: 33, value: 12},
-    {name: 34, value: 43},
-    {name: 35, value: 12},
-    {name: 36, value: 41},
-    {name: 37, value: 55},
-    {name: 38, value: 33},
-    {name: 39, value: 16},
-    {name: 40, value: 33},
-    {name: 41, value: 40},
-    {name: 42, value: 47},
-    {name: 43, value: 32},
-    {name: 44, value: 66},
-    {name: 45, value: 36},
-    {name: 46, value: 50},
-    {name: 47, value: 31},
-    {name: 48, value: 37},
-    {name: 49, value: 74},
-    {name: 50, value: 52},
-    {name: 51, value: 79},
-    {name: 52, value: 68}
-];
+const data = {
+    stats: [
+        {name: 1, value: 24},
+        {name: 2, value: 17},
+        {name: 3, value: 12},
+        {name: 4, value: 16},
+        {name: 5, value: 9},
+        {name: 6, value: 8},
+        {name: 7, value: 27},
+        {name: 8, value: 10},
+        {name: 9, value: 8},
+        {name: 10, value: 5},
+        {name: 11, value: 30},
+        {name: 12, value: 41},
+        {name: 13, value: 35},
+        {name: 14, value: 46},
+        {name: 15, value: 38},
+        {name: 16, value: 5},
+        {name: 17, value: 37},
+        {name: 18, value: 38},
+        {name: 19, value: 36},
+        {name: 20, value: 70},
+        {name: 21, value: 3},
+        {name: 22, value: 42},
+        {name: 23, value: 33},
+        {name: 24, value: 32},
+        {name: 25, value: 19},
+        {name: 26, value: 31},
+        {name: 27, value: 54},
+        {name: 28, value: 31},
+        {name: 29, value: 25},
+        {name: 30, value: 32},
+        {name: 31, value: 59},
+        {name: 32, value: 26},
+        {name: 33, value: 12},
+        {name: 34, value: 43},
+        {name: 35, value: 12},
+        {name: 36, value: 41},
+        {name: 37, value: 55},
+        {name: 38, value: 33},
+        {name: 39, value: 16},
+        {name: 40, value: 33},
+        {name: 41, value: 40},
+        {name: 42, value: 47},
+        {name: 43, value: 32},
+        {name: 44, value: 66},
+        {name: 45, value: 36},
+        {name: 46, value: 50},
+        {name: 47, value: 31},
+        {name: 48, value: 37},
+        {name: 49, value: 74},
+        {name: 50, value: 52},
+        {name: 51, value: 79},
+        {name: 52, value: 68}
+    ],
+    langs: [
+        {
+            name: "TypeScript",
+            value: 2079885,
+            color: '#fe7675'
+        },
+        {
+            name: "CSS",
+            value: 226314,
+            color: '#2dabe5'
+        },
+        {
+            name: "HTML",
+            value: 211663,
+            color: '#ffc36d'
+        },
+        {
+            name: "Shell",
+            value: 23874,
+            color: '#54e69d'
+        },
+        {
+            name: "JavaScript",
+            value: 20731,
+            color: '#fe7675'
+        }
+    ]
+};
 
 const CustomizedLabel = props => {
     return <Text x={-150} y={20} fontFamily={'Open Sans'} fontSize={14} transform="rotate(-90)">Commits</Text>
@@ -183,7 +213,7 @@ const Home = props => {
                     </Toolbar>
                     <CardContent>
                         <ResponsiveContainer width="99%" height={260}>
-                            <LineChart data={data}>
+                            <LineChart data={data.stats}>
                                 <XAxis dataKey="name"
                                        label="Week"
                                        interval={10}
@@ -235,6 +265,40 @@ const Home = props => {
                                 </ListItem>
                             )}
                         </List>
+                    </CardContent>
+                </Card>
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+                <Card className={classes.chart}>
+                    <Toolbar className={classes.cardHeader}>
+                        <Typography type="title" color="inherit">
+                            Languages (bytes)
+                        </Typography>
+                        <IconButton color="inherit">
+                            <Icon>more_vert</Icon>
+                        </IconButton>
+                    </Toolbar>
+                    <CardContent>
+                        <ResponsiveContainer width="99%" height={260}>
+                            <PieChart width={200} height={200}>
+                                <Pie data={data.langs}
+                                     dataKey="value"
+                                     nameKey="name"
+                                     valueKey="value"
+                                     cx="50%"
+                                     cy="50%"
+                                     innerRadius={60}
+                                     outerRadius={80}
+                                     fill="#8884d8"
+                                     paddingAngle={5}
+                                     label={(payload)=> payload.name}
+                                >
+                                    {data.langs.map(lang => <Cell key={lang.name} fill={lang.color}/>)}
+                                </Pie>
+                                <Tooltip/>
+                            </PieChart>
+                        </ResponsiveContainer>
                     </CardContent>
                 </Card>
             </Grid>

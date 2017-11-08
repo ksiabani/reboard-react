@@ -34,9 +34,9 @@ body {
 }
 
 #root {
-    height: 100%;
+    min-height: 100%;
 }
 
 .App {
-    height: 100%;
+    min-height: 100%;
 }

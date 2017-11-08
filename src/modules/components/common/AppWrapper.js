@@ -62,10 +62,12 @@ const styles = theme => ({
         padding: theme.spacing.unit * 3,
         height: 'calc(100% - 56px)',
         marginTop: 56,
+        paddingBottom: 8,
         [theme.breakpoints.up('sm')]: {
             height: 'calc(100% - 64px)',
-            marginTop: 64,
+            marginTop: 64
         },
+        overflow: 'auto'
     },
     drawerAppBar: {
         position: 'static',
