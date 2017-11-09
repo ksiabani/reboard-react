@@ -213,15 +213,30 @@ const data = {
     ]
 };
 
-const CustomizedLabel = props => {
-    return <Text x={-150} y={20} fontFamily={'Open Sans'} fontSize={14} transform="rotate(-90)">Commits</Text>
-};
+// const LineChartYLabel = props => {
+//     return <Text x={-150} y={20} fontFamily={'Open Sans'} fontSize={14} transform="rotate(-90)">Commits</Text>
+// };
+//
+// const LineChartXLabel = props => {
+//     const {x, y, payload} = props;
+//     return <text x="50%" y="95%" fontFamily={'Open Sans'} fontSize={14}>Week</text>
+// };
 
 const CustomizedTick = props => {
     const {x, y, payload} = props;
     return (
         <g transform={`translate(${x},${y})`}>
-            <text x={-5} y={-13} dy={16} textAnchor="end" fill="#666" transform="rotate(-45)">{payload.value}</text>
+            <text x={-5} y={-13} dy={16} textAnchor="end" fill="#666"
+                  transform="rotate(-45)">{payload.value}</text>
+        </g>
+    )
+};
+
+const PieLabel = props => {
+    const {x, y, payload} = props;
+    return (
+        <g transform={`translate(${x},${y})`}>
+            <text fontFamily={'Open Sans'} fill="#666">{payload.name}</text>
         </g>
     )
 };
@@ -264,14 +279,11 @@ const Home = props => {
                     </Toolbar>
                     <CardContent>
                         <ResponsiveContainer width="99%" height={260}>
-                            <LineChart data={data.stats}>
-                                <XAxis dataKey="name"
-                                       label="Week"
-                                       interval={10}
-                                       tick={{fontFamily: "\"Open Sans\", sans-serif", fontSize: "0.9rem"}}
-                                       height={50}
+                            <LineChart data={data.stats} fontFamily={'Open Sans'} fontSize="1rem">
+                                <XAxis dataKey="name" interval={10} height={50}
+                                       label={<text x={-140} y={20} transform="rotate(-90)">Commits</text>}
                                 />
-                                <YAxis label={<CustomizedLabel/>} width={50}/>
+                                <YAxis label={<text x="50%" y="95%">Week</text>}/>
                                 <CartesianGrid/>
                                 <Tooltip/>
                                 <Line type="linear"
@@ -344,6 +356,7 @@ const Home = props => {
                                      fill="#8884d8"
                                      paddingAngle={5}
                                      label={(payload) => payload.name}
+                                     fontFamily={'Open Sans'}
                                 >
                                     {data.langs.map(lang => <Cell key={lang.name} fill={lang.color}/>)}
                                 </Pie>
@@ -366,9 +379,13 @@ const Home = props => {
                     </Toolbar>
                     <CardContent>
                         <ResponsiveContainer width="99%" height={260}>
-                            <BarChart data={data.contributors}>
+                            <BarChart data={data.contributors} fontFamily={'Open Sans'}>
                                 <CartesianGrid vertical={false}/>
-                                <XAxis dataKey="name" tick={<CustomizedTick/>} interval={0} height={80}/>
+                                <XAxis dataKey="name"
+                                       tick={<CustomizedTick/>}
+                                       interval={0}
+                                       height={80}
+                                />
                                 <YAxis type="number" domain={[0, 'dataMax']}/>
                                 <Tooltip />
                                 <Bar fill="#8884d8" dataKey="value"/>
