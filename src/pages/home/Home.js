@@ -8,7 +8,7 @@ import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import Icon from 'material-ui/Icon';
 import {LineChart, Text, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer} from 'recharts';
-import {Pie, PieChart, Cell} from 'recharts';
+import {Pie, PieChart, Cell, Legend, BarChart, Bar} from 'recharts';
 import List, {ListItem, ListItemText} from 'material-ui/List';
 
 const styles = theme => ({
@@ -168,11 +168,62 @@ const data = {
             value: 20731,
             color: '#fe7675'
         }
+    ],
+    contributors: [
+        {
+            "name": "DevVersion",
+            "value": 466
+        },
+        {
+            "name": "crisbeto",
+            "value": 417
+        },
+        {
+            "name": "jelbourn",
+            "value": 327
+        },
+        {
+            "name": "kara",
+            "value": 196
+        },
+        {
+            "name": "mmalerba",
+            "value": 110
+        },
+        {
+            "name": "andrewseguin",
+            "value": 89
+        },
+        {
+            "name": "tinayuangao",
+            "value": 68
+        },
+        {
+            "name": "hansl",
+            "value": 55
+        },
+        {
+            "name": "robertmesserle",
+            "value": 34
+        },
+        {
+            "name": "willshowell",
+            "value": 27
+        }
     ]
 };
 
 const CustomizedLabel = props => {
     return <Text x={-150} y={20} fontFamily={'Open Sans'} fontSize={14} transform="rotate(-90)">Commits</Text>
+};
+
+const CustomizedTick = props => {
+    const {x, y, payload} = props;
+    return (
+        <g transform={`translate(${x},${y})`}>
+            <text x={-5} y={-13} dy={16} textAnchor="end" fill="#666" transform="rotate(-45)">{payload.value}</text>
+        </g>
+    )
 };
 
 
@@ -292,12 +343,36 @@ const Home = props => {
                                      outerRadius={80}
                                      fill="#8884d8"
                                      paddingAngle={5}
-                                     label={(payload)=> payload.name}
+                                     label={(payload) => payload.name}
                                 >
                                     {data.langs.map(lang => <Cell key={lang.name} fill={lang.color}/>)}
                                 </Pie>
                                 <Tooltip/>
                             </PieChart>
+                        </ResponsiveContainer>
+                    </CardContent>
+                </Card>
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+                <Card className={classes.chart}>
+                    <Toolbar className={classes.cardHeader}>
+                        <Typography type="title" color="inherit">
+                            Top contributors
+                        </Typography>
+                        <IconButton color="inherit">
+                            <Icon>more_vert</Icon>
+                        </IconButton>
+                    </Toolbar>
+                    <CardContent>
+                        <ResponsiveContainer width="99%" height={260}>
+                            <BarChart data={data.contributors}>
+                                <CartesianGrid vertical={false}/>
+                                <XAxis dataKey="name" tick={<CustomizedTick/>} interval={0} height={80}/>
+                                <YAxis type="number" domain={[0, 'dataMax']}/>
+                                <Tooltip />
+                                <Bar fill="#8884d8" dataKey="value"/>
+                            </BarChart>
                         </ResponsiveContainer>
                     </CardContent>
                 </Card>
